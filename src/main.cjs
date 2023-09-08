@@ -52,7 +52,9 @@ module.exports.parse = ({ content, name }) => {
     }
     if (rule.rule instanceof URL) {
       if (rule.rule.protocol == 'file:') {
-        console.log(`[clash-rules] 正在添加 ${rule.name}(本地文件, ${rule.rule.pathname})`)
+        console.log(
+          `[clash-rules] 正在添加 ${rule.name}(本地文件, ${rule.rule.pathname})`,
+        )
         content['rule-providers'][`clash-rules-${id}`] = {
           behavior: rule.behavior ?? 'classical',
           interval: rule.interval ?? 86400,
@@ -73,13 +75,11 @@ module.exports.parse = ({ content, name }) => {
       content['rules'].push(`RULE-SET,clash-rules-${id},${rule.name}`)
       id++
     } else {
-      console.log(
-        `[clash-rules] 正在添加 ${rule.name}(内联)`,
-      )
+      console.log(`[clash-rules] 正在添加 ${rule.name}(内联)`)
       content['rules'].push(`${rule.rule},${name}`)
     }
     if (rule.reuse) {
-      if (!useable_proxy.includes(rule.name))useable_proxy.push(rule.name)
+      if (!useable_proxy.includes(rule.name)) useable_proxy.push(rule.name)
     }
   }
   return content
