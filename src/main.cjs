@@ -23,7 +23,7 @@ module.exports.parse = ({ content, name }) => {
   if (globalThis.config.override) {
     for (const v of globalThis.config.override) {
       if (content[v]) {
-        console.log('[clash-rules] 已覆盖配置项: ', v)
+        console.log(`[clash-rules] 已覆盖配置项: ${v}`)
         content[v] = new content[v].constructor()
       }
     }
@@ -62,7 +62,7 @@ module.exports.parse = ({ content, name }) => {
         content['proxy-groups'].push({
           name: rule.name,
           type: 'select',
-          proxies: final_order,
+          proxies: Object.assign([], final_order),
         })
       }
       if (rule.rule) {
@@ -110,7 +110,7 @@ module.exports.parse = ({ content, name }) => {
           url: rule.url.toString(),
           interval: rule.interval,
           tolerance: rule.tolerance,
-          proxies: final_order,
+          proxies: Object.assign([], final_order),
         })
       } else {
         console.error(
@@ -131,7 +131,7 @@ module.exports.parse = ({ content, name }) => {
           type: 'fallback',
           url: rule.url.toString(),
           interval: rule.interval,
-          proxies: final_order,
+          proxies: Object.assign([], final_order),
         })
       } else {
         console.error(
