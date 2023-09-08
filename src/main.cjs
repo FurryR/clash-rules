@@ -38,11 +38,17 @@ module.exports.parse = ({ content, name }) => {
   if (useable_proxy.length == 0) useable_proxy = ['DIRECT', 'REJECT']
   // 开始添加代理
   for (const rule of rules) {
-    content['proxy-groups'].push({
-      name: rule.name,
-      type: 'select',
-      proxies: rule.proxy ?? useable_proxy,
-    })
+    if (
+      content['proxy-groups'].every((value) => {
+        return value.name != rule.name
+      })
+    ) {
+      content['proxy-groups'].push({
+        name: rule.name,
+        type: 'select',
+        proxies: rule.proxy ?? useable_proxy,
+      })
+    }
     if (rule.rule instanceof URL) {
       if (rule.rule.protocol == 'file:') {
         content['rule-providers'][`clash-rules-${id}`] = {
