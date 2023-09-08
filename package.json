@@ -1,0 +1,32 @@
+{
+  "name": "clash-rules",
+  "version": "1.0.0",
+  "description": "为任意代理添加自定义规则集，并轻松实现分规则代理的节点选择。",
+  "main": "src/main.cjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src --ext .cjs",
+    "fix": "eslint ./src --fix --ext .cjs",
+    "prettier": "prettier ./src -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FurryR/clash-rules.git"
+  },
+  "keywords": [
+    "javascript",
+    "clash",
+    "clash-for-windows",
+    "clash-rules"
+  ],
+  "author": "FurryR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FurryR/clash-rules/issues"
+  },
+  "homepage": "https://github.com/FurryR/clash-rules#readme",
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3"
+  }
+}
