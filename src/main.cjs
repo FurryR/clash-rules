@@ -92,7 +92,7 @@ module.exports.parse = ({ content, name }) => {
           id++
         } else {
           console.log(`[clash-rules] 正在添加 ${rule.name}(内联)`)
-          content['rules'].push(`${rule.rule},${name}`)
+          content['rules'].push(`${rule.rule},${rule.name}`)
         }
       }
     } else if (rule.type == 'url-test') {
