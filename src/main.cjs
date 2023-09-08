@@ -17,6 +17,7 @@ module.exports.parse = ({ content, name }) => {
   if (globalThis.config.override) {
     for (const v of globalThis.config.override) {
       if (content[v]) {
+        console.log('[clash-rules] 已覆盖配置项: ', v)
         content[v] = new content[v].constructor()
       }
     }
@@ -51,6 +52,7 @@ module.exports.parse = ({ content, name }) => {
     }
     if (rule.rule instanceof URL) {
       if (rule.rule.protocol == 'file:') {
+        console.log(`[clash-rules] 正在添加 ${rule.name}(本地文件, ${rule.rule.pathname})`)
         content['rule-providers'][`clash-rules-${id}`] = {
           behavior: rule.behavior ?? 'classical',
           interval: rule.interval ?? 86400,
@@ -58,6 +60,9 @@ module.exports.parse = ({ content, name }) => {
           type: 'file',
         }
       } else {
+        console.log(
+          `[clash-rules] 正在添加 ${rule.name}(URL, ${rule.rule.toString()})`,
+        )
         content['rule-providers'][`clash-rules-${id}`] = {
           behavior: rule.behavior ?? 'classical',
           interval: rule.interval ?? 86400,
@@ -68,6 +73,9 @@ module.exports.parse = ({ content, name }) => {
       content['rules'].push(`RULE-SET,clash-rules-${id},${rule.name}`)
       id++
     } else {
+      console.log(
+        `[clash-rules] 正在添加 ${rule.name}(内联)`,
+      )
       content['rules'].push(`${rule.rule},${name}`)
     }
     if (rule.reuse) {
