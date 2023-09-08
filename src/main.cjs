@@ -79,7 +79,7 @@ module.exports.parse = ({ content, name }) => {
       content['rules'].push(`${rule.rule},${name}`)
     }
     if (rule.reuse) {
-      useable_proxy.push(rule.name)
+      if (!useable_proxy.includes(rule.name))useable_proxy.push(rule.name)
     }
   }
   return content
