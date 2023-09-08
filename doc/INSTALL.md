@@ -9,7 +9,6 @@
 ## CFW
 
 1. 请在 `Settings->Mixin` 中将 `Type` 调整为 `Javascript`。
-
 2. 点击 `Javascript` 后方的 `Edit`。
 3. 将 `src/main.cjs` 的内容复制进去。
 4. 安装完成！
@@ -32,7 +31,7 @@ module.exports.parse = ...
 Clash.use(
   new JSMixin(
     new URL(
-      'https://raw.githubusercontent.com/FurryR/clash-mixin/main/src/main.cjs',
+      'https://raw.githubusercontent.com/FurryR/clash-rules/main/src/main.cjs',
     ),
   ),
 )
@@ -44,7 +43,7 @@ Clash.use(
 Clash.use(
   new JSMixin(
     new URL(
-      'https://raw.githubusercontent.com/FurryR/clash-mixin/main/src/main.cjs',
+      'https://raw.githubusercontent.com/FurryR/clash-rules/main/src/main.cjs',
     ),
     {
       // 这里指定配置...
