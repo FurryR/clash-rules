@@ -11,7 +11,7 @@
 /**
  * @typedef {(Rule | URLTest | Fallback)[]} RuleSet
  */
-module.exports.parse = ({ content, name }) => {
+module.exports.parse = ({ content }) => {
   if (!globalThis.config)
     console.error('[clash-rules] 未指定 config，clash-rules 将不会生效。')
   /**
