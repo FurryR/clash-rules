@@ -9,6 +9,10 @@
     "fix": "eslint ./src --fix --ext .cjs",
     "prettier": "prettier ./src -c -w"
   },
+  "pre-commit": [
+    "lint",
+    "prettier"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FurryR/clash-rules.git"
@@ -27,6 +31,7 @@
   "homepage": "https://github.com/FurryR/clash-rules#readme",
   "devDependencies": {
     "eslint": "^8.48.0",
+    "pre-commit": "^1.2.2",
     "prettier": "^3.0.3"
   }
 }
