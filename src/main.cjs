@@ -1,12 +1,12 @@
 // @ts-check
 /**
- * @typedef {{type: 'select', rule?: URL | string, name: string, behavior?: string, interval?: number, proxy?: string[], preferred?: string[], reuse?: boolean}} Rule
+ * @typedef {{type: 'select', rule?: URL | string, name: string, behavior?: string, interval?: number, proxy?: string[]}} Rule
  */
 /**
- * @typedef {{type: 'url-test', url: URL, name: string, interval: number, tolerance: number, proxy?: string[], preferred?: string[], reuse?: boolean}} URLTest
+ * @typedef {{type: 'url-test', url: URL, name: string, interval: number, tolerance: number, proxy?: string[]}} URLTest
  */
 /**
- * @typedef {{type: 'fallback', url: URL, name: string, interval: number, proxy?: string[], preferred?: string[], reuse?: boolean}} Fallback
+ * @typedef {{type: 'fallback', url: URL, name: string, interval: number, proxy?: string[]}} Fallback
  */
 /**
  * @typedef {(Rule | URLTest | Fallback)[]} RuleSet
@@ -47,12 +47,20 @@ module.exports.parse = ({ content }) => {
   for (const rule of rules) {
     /** @type {string[]} */
     let final_order = []
-    if (rule.preferred) {
-      final_order = rule.preferred
-      for (const v of rule.proxy ?? useable_proxy) {
-        if (!final_order.includes(v)) final_order.push(v)
+    if (rule.proxy) {
+      if (rule.proxy.includes('|')) {
+        const before = rule.proxy.slice(0, rule.proxy.indexOf('|'))
+        const after = rule.proxy.slice(rule.proxy.indexOf('|') + 1)
+        final_order = before.concat(
+          useable_proxy.filter(
+            (v) => !(before.includes(v) || after.includes(v)),
+          ),
+          after,
+        )
+      } else {
+        final_order = rule.proxy
       }
-    } else final_order = rule.proxy ?? useable_proxy
+    } else final_order = useable_proxy
     if (rule.type == 'select') {
       if (
         content['proxy-groups'].every((value) => {
@@ -62,7 +70,7 @@ module.exports.parse = ({ content }) => {
         content['proxy-groups'].push({
           name: rule.name,
           type: 'select',
-          proxies: Object.assign([], final_order),
+          proxies: final_order.concat(),
         })
       }
       if (rule.rule) {
@@ -110,7 +118,7 @@ module.exports.parse = ({ content }) => {
           url: rule.url.toString(),
           interval: rule.interval,
           tolerance: rule.tolerance,
-          proxies: Object.assign([], final_order),
+          proxies: final_order.concat(),
         })
       } else {
         console.error(
@@ -131,16 +139,13 @@ module.exports.parse = ({ content }) => {
           type: 'fallback',
           url: rule.url.toString(),
           interval: rule.interval,
-          proxies: Object.assign([], final_order),
+          proxies: final_order.concat(),
         })
       } else {
         console.error(
           `[clash-rules] 检测到名字重复(fallback, ${rule.name})，已忽略更新的代理组，这可能导致非预期结果。`,
         )
       }
-    }
-    if (rule.reuse) {
-      if (!useable_proxy.includes(rule.name)) useable_proxy.push(rule.name)
     }
   }
   return content
