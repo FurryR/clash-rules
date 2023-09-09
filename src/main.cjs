@@ -14,7 +14,7 @@
 module.exports.parse = ({ content }) => {
   if (!globalThis.config) {
     console.error('❌ clash-rules 需要指定配置才能运行')
-    return
+    return content
   }
   console.log('🚧 clash-rules 加载中')
   /**
