@@ -7,17 +7,18 @@
   - [支持](#支持)
   - [安装](#安装)
   - [配置](#配置)
+  - [推荐](#推荐)
   - [赞助](#赞助)
 
 ## 功能
 
-- [X] 为自己 3 分钟制作的 proxy 快速添加规则列表
-- [X] 轻松实现分规则代理
+- [x] 为自己 3 分钟制作的 proxy 快速添加规则列表
+- [x] 轻松实现分规则代理
 
 ## 支持
 
-- [X] 在 Clash For Windows 上可直接使用此插件。
-- [X] 通过使用 [clash-mixin](https://github.com/FurryR/clash-mixin)，在任何 clash 客户端上都能使用预先生成好的配置。
+- [x] 在 Clash For Windows 上可直接使用此插件。
+- [x] 通过使用 [clash-mixin](https://github.com/FurryR/clash-mixin)，在任何 clash 客户端上都能使用预先生成好的配置。
 
 更多信息请查看[安装](#安装)。
 
