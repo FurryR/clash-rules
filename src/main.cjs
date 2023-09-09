@@ -79,7 +79,13 @@ module.exports.parse = ({ content }) => {
       if (rule.rule) {
         if (rule.rule instanceof URL) {
           if (rule.rule.protocol == 'file:') {
-            console.log(`🛠 正在添加 ${rule.name} [规则编号 #${id}]`)
+            console.groupCollapsed(`🛠 正在添加 ${rule.name} [规则编号 #${id}]`)
+            console.log(`📄 地址: ${rule.rule.pathname}`)
+            console.log(`🕘 更新周期: ${rule.interval ?? 86400}`)
+            console.log(`💻 行为: ${rule.behavior ?? 'classical'}`)
+            console.log('📁 代理列表:')
+            console.table(final_order)
+            console.groupEnd()
             content['rule-providers'][`clash-rules-${id}`] = {
               behavior: rule.behavior ?? 'classical',
               interval: rule.interval ?? 86400,
@@ -87,7 +93,13 @@ module.exports.parse = ({ content }) => {
               type: 'file',
             }
           } else {
-            console.log(`🛠 正在添加 ${rule.name} [规则编号 #${id}]`)
+            console.groupCollapsed(`🛠 正在添加 ${rule.name} [规则编号 #${id}]`)
+            console.log(`📄 地址: ${rule.rule}`)
+            console.log(`🕘 更新周期: ${rule.interval ?? 86400}`)
+            console.log(`💻 行为: ${rule.behavior ?? 'classical'}`)
+            console.log('📁 代理列表:')
+            console.table(final_order)
+            console.groupEnd()
             content['rule-providers'][`clash-rules-${id}`] = {
               behavior: rule.behavior ?? 'classical',
               interval: rule.interval ?? 86400,
@@ -98,7 +110,13 @@ module.exports.parse = ({ content }) => {
           content['rules'].push(`RULE-SET,clash-rules-${id},${rule.name}`)
           id++
         } else {
-          console.log(`🛠 正在添加 ${rule.name} [内联规则]`)
+          console.groupCollapsed(`🛠 正在添加 ${rule.name} [内联规则]`)
+          console.log(`📄 规则: ${rule.rule}`)
+          console.log(`🕘 更新周期: ${rule.interval ?? 86400}`)
+          console.log(`💻 行为: ${rule.behavior ?? 'classical'}`)
+          console.log('📁 代理列表:')
+          console.table(final_order)
+          console.groupEnd()
           content['rules'].push(`${rule.rule},${rule.name}`)
         }
       }
@@ -108,7 +126,13 @@ module.exports.parse = ({ content }) => {
           return value.name != rule.name
         })
       ) {
-        console.log(`🛠 正在添加 ${rule.name} [url-test]`)
+        console.groupCollapsed(`🛠 正在添加 ${rule.name} [url-test]`)
+        console.log(`🔗 网址: ${rule.url}`)
+        console.log(`🕘 更新周期: ${rule.interval}`)
+        console.log(`⏱ 误差: ${rule.tolerance}`)
+        console.log('📁 代理列表:')
+        console.table(final_order)
+        console.groupEnd()
         content['proxy-groups'].push({
           name: rule.name,
           type: 'url-test',
@@ -126,7 +150,12 @@ module.exports.parse = ({ content }) => {
           return value.name != rule.name
         })
       ) {
-        console.log(`🛠 正在添加 ${rule.name} [fallback]`)
+        console.groupCollapsed(`🛠 正在添加 ${rule.name} [fallback]`)
+        console.log(`🔗 网址: ${rule.url}`)
+        console.log(`🕘 更新周期: ${rule.interval}`)
+        console.log('📁 代理列表:')
+        console.table(final_order)
+        console.groupEnd()
         content['proxy-groups'].push({
           name: rule.name,
           type: 'fallback',
