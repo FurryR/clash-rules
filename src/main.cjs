@@ -79,9 +79,7 @@ module.exports.parse = ({ content }) => {
       if (rule.rule) {
         if (rule.rule instanceof URL) {
           if (rule.rule.protocol == 'file:') {
-            console.log(
-              `🛠 正在添加 ${rule.name} [规则编号 #${id}]`,
-            )
+            console.log(`🛠 正在添加 ${rule.name} [规则编号 #${id}]`)
             content['rule-providers'][`clash-rules-${id}`] = {
               behavior: rule.behavior ?? 'classical',
               interval: rule.interval ?? 86400,
@@ -110,9 +108,7 @@ module.exports.parse = ({ content }) => {
           return value.name != rule.name
         })
       ) {
-        console.log(
-          `🛠 正在添加 ${rule.name} [url-test]`,
-        )
+        console.log(`🛠 正在添加 ${rule.name} [url-test]`)
         content['proxy-groups'].push({
           name: rule.name,
           type: 'url-test',
@@ -122,9 +118,7 @@ module.exports.parse = ({ content }) => {
           proxies: final_order.concat(),
         })
       } else {
-        console.warn(
-          `⚠️ ${rule.name} 重复，已忽略修改`,
-        )
+        console.warn(`⚠️ ${rule.name} 重复，已忽略修改`)
       }
     } else if (rule.type == 'fallback') {
       if (
@@ -132,9 +126,7 @@ module.exports.parse = ({ content }) => {
           return value.name != rule.name
         })
       ) {
-        console.log(
-          `🛠 正在添加 ${rule.name} [fallback]`,
-        )
+        console.log(`🛠 正在添加 ${rule.name} [fallback]`)
         content['proxy-groups'].push({
           name: rule.name,
           type: 'fallback',
