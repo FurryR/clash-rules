@@ -12,8 +12,10 @@
  * @typedef {(Rule | URLTest | Fallback)[]} RuleSet
  */
 module.exports.parse = ({ content }) => {
-  if (!globalThis.config)
-    console.error('[clash-rules] 未指定 config，clash-rules 将不会生效。')
+  if (!globalThis.config) {
+    console.error('[clash-rules] ❌ 未指定 config，clash-rules 将不会生效。')
+    return
+  }
   /**
    * @type {RuleSet}
    */
@@ -77,7 +79,7 @@ module.exports.parse = ({ content }) => {
         if (rule.rule instanceof URL) {
           if (rule.rule.protocol == 'file:') {
             console.log(
-              `[clash-rules] 正在添加 ${rule.name}(本地文件, ${rule.rule.pathname})`,
+              `[clash-rules] 🛠 正在添加 ${rule.name}(本地文件, ${rule.rule.pathname})`,
             )
             content['rule-providers'][`clash-rules-${id}`] = {
               behavior: rule.behavior ?? 'classical',
@@ -87,7 +89,7 @@ module.exports.parse = ({ content }) => {
             }
           } else {
             console.log(
-              `[clash-rules] 正在添加 ${rule.name}(URL, ${rule.rule})`,
+              `[clash-rules] 🛠 正在添加 ${rule.name}(URL, ${rule.rule})`,
             )
             content['rule-providers'][`clash-rules-${id}`] = {
               behavior: rule.behavior ?? 'classical',
@@ -99,7 +101,7 @@ module.exports.parse = ({ content }) => {
           content['rules'].push(`RULE-SET,clash-rules-${id},${rule.name}`)
           id++
         } else {
-          console.log(`[clash-rules] 正在添加 ${rule.name}(内联)`)
+          console.log(`[clash-rules] 🛠 正在添加 ${rule.name}(内联)`)
           content['rules'].push(`${rule.rule},${rule.name}`)
         }
       }
@@ -110,7 +112,7 @@ module.exports.parse = ({ content }) => {
         })
       ) {
         console.log(
-          `[clash-rules] 正在添加 ${rule.name}(url-test, ${rule.url})`,
+          `[clash-rules] 🛠 正在添加 ${rule.name}(url-test, ${rule.url})`,
         )
         content['proxy-groups'].push({
           name: rule.name,
@@ -122,7 +124,7 @@ module.exports.parse = ({ content }) => {
         })
       } else {
         console.error(
-          `[clash-rules] 检测到名字重复(url-test, ${rule.name})，已忽略更新的代理组，这可能导致非预期结果。`,
+          `[clash-rules] ⚠️ 检测到名字重复(url-test, ${rule.name})，已忽略更新的代理组，这可能导致非预期结果。`,
         )
       }
     } else if (rule.type == 'fallback') {
@@ -132,7 +134,7 @@ module.exports.parse = ({ content }) => {
         })
       ) {
         console.log(
-          `[clash-rules] 正在添加 ${rule.name}(fallback, ${rule.url})`,
+          `[clash-rules] 🛠 正在添加 ${rule.name}(fallback, ${rule.url})`,
         )
         content['proxy-groups'].push({
           name: rule.name,
@@ -143,10 +145,11 @@ module.exports.parse = ({ content }) => {
         })
       } else {
         console.error(
-          `[clash-rules] 检测到名字重复(fallback, ${rule.name})，已忽略更新的代理组，这可能导致非预期结果。`,
+          `[clash-rules] ⚠️ 检测到名字重复(fallback, ${rule.name})，已忽略更新的代理组，这可能导致非预期结果。`,
         )
       }
     }
   }
+  console.log('[clash-rules] 💫 完成！享受你的配置！')
   return content
 }
