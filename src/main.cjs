@@ -104,6 +104,7 @@ module.exports.parse = ({ content }) => {
               behavior: rule.behavior ?? 'classical',
               interval: rule.interval ?? 86400,
               url: rule.rule.toString(),
+              path: `./providers/rule/${btoa(rule.rule.toString())}.yaml`,
               type: 'http',
             }
           }
